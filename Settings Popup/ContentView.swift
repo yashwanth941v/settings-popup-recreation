@@ -16,6 +16,13 @@ struct ContentView: View {
     @State private var askBeforeDel = true
     @State private var privacyProtection = "Standard"
     @State private var followUpSuggestions = false
+    @State private var organizeByThread = true
+    @State private var mutedThreadAction = "Mark Read"
+    @State private var threadSortOrder = "Newest First"
+    @State private var collapseReadThreads = false
+    @State private var autoExpandThreads = true
+    @State private var notifyOnMutedThread = false
+    @State private var threadGrouping = "By Subject"
     
     var body: some View {
         
@@ -108,6 +115,87 @@ struct ContentView: View {
                             }
                             
                             Toggle("Follow-up Suggestions", isOn: $followUpSuggestions)
+                        
+                    }
+                    
+                    Section("Threading") {
+                        
+                        Toggle("Organise by Thread", isOn: $organizeByThread)
+                        
+                        NavigationLink {
+                            Form {
+                                Section {
+                                    Picker("Muted Thread Action", selection: $mutedThreadAction) {
+                                        Text("Mark Read").tag("Mark Read")
+                                        Text("Archive").tag("Archive")
+                                        Text("Delete").tag("Delete")
+                                        Text("Do Nothing").tag("Do Nothing")
+                                    }
+                                    .pickerStyle(.inline)
+                                    .labelsHidden()
+                                }
+                            }
+                            .navigationTitle("Muted Thread Action")
+                            .navigationBarTitleDisplayMode(.inline)
+                        } label: {
+                            LabeledContent("Muted Thread Action", value: mutedThreadAction)
+                        }
+                        
+                        NavigationLink {
+                            Form {
+                                Section {
+                                    Picker("Thread Sort Order", selection: $threadSortOrder) {
+                                        Text("Newest First").tag("Newest First")
+                                        Text("Oldest First").tag("Oldest First")
+                                        Text("Most Active").tag("Most Active")
+                                        Text("Alphabetical").tag("Alphabetical")
+                                    }
+                                    .pickerStyle(.inline)
+                                    .labelsHidden()
+                                }
+                            }
+                            .navigationTitle("Thread Sort Order")
+                            .navigationBarTitleDisplayMode(.inline)
+                        } label: {
+                            LabeledContent("Thread Sort Order", value: threadSortOrder)
+                        }
+                        
+                        Toggle("Collapse Read Threads", isOn: $collapseReadThreads)
+                        
+                        Toggle("Auto-expand Threads", isOn: $autoExpandThreads)
+                        
+                        Toggle("Notify on Muted Threads", isOn: $notifyOnMutedThread)
+                        
+                    }
+                    
+                    Section("Notifications") {
+                        
+                        Toggle("Thread Replies", isOn: .constant(true))
+                        
+                        Toggle("Mentions", isOn: .constant(true))
+                        
+                        NavigationLink {
+                            Form {
+                                Section {
+                                    Picker("Notification Sound", selection: .constant("Default")) {
+                                        Text("Default").tag("Default")
+                                        Text("Chime").tag("Chime")
+                                        Text("Bell").tag("Bell")
+                                        Text("None").tag("None")
+                                    }
+                                    .pickerStyle(.inline)
+                                    .labelsHidden()
+                                }
+                            }
+                            .navigationTitle("Notification Sound")
+                            .navigationBarTitleDisplayMode(.inline)
+                        } label: {
+                            LabeledContent("Notification Sound", value: "Default")
+                        }
+                        
+                        Toggle("Vibration", isOn: .constant(true))
+                        
+                        Toggle("Badge App Icon", isOn: .constant(true))
                         
                     }
                 }
