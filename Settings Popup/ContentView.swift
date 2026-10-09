@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var previewLines = 2
     @State private var swipeOpt = "Archive"
     @State private var askBeforeDel = true
+    @State private var privacyProtection = "Standard"
+    @State private var followUpSuggestions = false
     
     var body: some View {
         
@@ -85,6 +87,27 @@ struct ContentView: View {
                     Section("Messages") {
                         
                             Toggle("Ask Before Deleting", isOn: $askBeforeDel)
+                            
+                            NavigationLink {
+                                Form {
+                                    Section {
+                                        Picker("Privacy Protection", selection: $privacyProtection) {
+                                            Text("Standard").tag("Standard")
+                                            Text("Enhanced").tag("Enhanced")
+                                            Text("Maximum").tag("Maximum")
+                                            Text("Off").tag("Off")
+                                        }
+                                        .pickerStyle(.inline)
+                                        .labelsHidden()
+                                    }
+                                }
+                                .navigationTitle("Privacy Protection")
+                                .navigationBarTitleDisplayMode(.inline)
+                            } label: {
+                                Text("Privacy Protection")
+                            }
+                            
+                            Toggle("Follow-up Suggestions", isOn: $followUpSuggestions)
                         
                     }
                 }
